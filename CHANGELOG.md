@@ -1,4 +1,19 @@
 ---------------------------------------------------------------------------------------------------------------------------
+Bugfix: **Camera Inspector error with Scriptable Render Pipeline**
+---------------------------------------------------------------------------------------------------------------------------
+Fixed "Camera.GetCommandBuffers only works with built-in renderer" error that occurred when viewing Camera components in the Unity Inspector while using the PSX Scriptable Render Pipeline. The built-in Camera Inspector attempts to call Camera.GetCommandBuffers(), which is only available in the Built-in Render Pipeline (BIRP) and not compatible with SRPs. Created a custom PSXCameraEditor that provides a complete Camera inspector implementation without calling BIRP-only APIs. This eliminates the error message that appeared in normal inspector mode (though it was not present in debug mode).
+
+---------------------------------------------------------------------------------------------------------------------------
+Bugfix: **MissingReferenceException when accessing destroyed Texture2D objects**
+---------------------------------------------------------------------------------------------------------------------------
+Fixed MissingReferenceException that occurred when texture resources from render pipeline assets were destroyed (e.g., during asset reimport or scene reload) but were still being accessed. Added null checks for alphaClippingDitherTex, whiteNoiseTexture, blueNoiseTexture, and framebufferDitherTex before accessing their properties. When a texture is null or destroyed, the pipeline now falls back to Texture2D.grayTexture as a safe default.
+
+---------------------------------------------------------------------------------------------------------------------------
+Bugfix: **Obsolete API warning for LightDataGI.InitNoBake**
+---------------------------------------------------------------------------------------------------------------------------
+Replaced obsolete LightDataGI.InitNoBake(int) calls with the new InitNoBake(EntityId) API by using light.GetEntityId() instead of light.GetInstanceID(). This resolves compiler warnings and ensures compatibility with newer Unity versions.
+
+---------------------------------------------------------------------------------------------------------------------------
 Bugfix PSXLit: **Flipbooks with non-square and / or non-power of two frame counts in X and Y now fully supported**
 ---------------------------------------------------------------------------------------------------------------------------
 Previously, when a flipbook that contained non-square and / or non-power of two frame counts in X and Y was used, the LOD and uv offsets were incorrectly computed.
@@ -6,9 +21,9 @@ When using LODs, individual frames of a flipbook must still be a power of two in
 A resolution of 192 x 64 is valid because 192 / 3 = 64 which is an integer, and a power of two.
 
 ---------------------------------------------------------------------------------------------------------------------------
-New Unity Version Support: **6.0, 6.1, 6.2**
+New Unity Version Support: **6.0, 6.1, 6.2, 6.3**
 ---------------------------------------------------------------------------------------------------------------------------
-Unity 6.2 is now the newest version that the Haunted PSX Render Pipeline now supports. Previously it only supported up to 2022.3.
+Unity 6.3 is now the newest version that the Haunted PSX Render Pipeline now supports. Previously it only supported up to 6.2. The pipeline uses Unity's Scriptable Render Pipeline (SRP) architecture, built on top of the Universal Render Pipeline (URP) core package (com.unity.render-pipelines.core).
 
 ---------------------------------------------------------------------------------------------------------------------------
 new Lighting Volume Feature: **Lighting Clamp Mode**

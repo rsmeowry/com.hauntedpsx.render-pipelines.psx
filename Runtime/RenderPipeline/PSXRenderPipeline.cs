@@ -768,6 +768,10 @@ namespace HauntedPSX.RenderPipelines.PSX.Runtime
 
                 cmd.SetGlobalFloat(PSXShaderIDs._FramebufferDither, volumeSettings.framebufferDither.value);
                 Texture2D framebufferDitherTex = GetFramebufferDitherTexFromAssetAndFrame(asset, (uint)Time.frameCount);
+                if (framebufferDitherTex == null)
+                {
+                    framebufferDitherTex = Texture2D.grayTexture;
+                }
                 cmd.SetGlobalTexture(PSXShaderIDs._FramebufferDitherTexture, framebufferDitherTex);
                 cmd.SetGlobalVector(PSXShaderIDs._FramebufferDitherSize, new Vector4(
                     framebufferDitherTex.width,
@@ -979,6 +983,10 @@ namespace HauntedPSX.RenderPipelines.PSX.Runtime
                 cmd.SetGlobalVector(PSXShaderIDs._Time, new Vector4(time / 20.0f, time, time * 2.0f, time * 3.0f));
             
                 Texture2D alphaClippingDitherTex = GetAlphaClippingDitherTexFromAssetAndFrame(asset, (uint)Time.frameCount);
+                if (alphaClippingDitherTex == null)
+                {
+                    alphaClippingDitherTex = Texture2D.grayTexture;
+                }
                 cmd.SetGlobalTexture(PSXShaderIDs._AlphaClippingDitherTexture, alphaClippingDitherTex);
                 cmd.SetGlobalVector(PSXShaderIDs._AlphaClippingDitherSize, new Vector4(
                     alphaClippingDitherTex.width,
@@ -1040,10 +1048,18 @@ namespace HauntedPSX.RenderPipelines.PSX.Runtime
                 cmd.SetGlobalTexture(PSXShaderIDs._FrameBufferTexture, rasterizationRT);
 
                 Texture2D whiteNoiseTexture = GetWhiteNoise1024RGBTexFromAssetAndFrame(asset, (uint)Time.frameCount);
+                if (whiteNoiseTexture == null)
+                {
+                    whiteNoiseTexture = Texture2D.grayTexture;
+                }
                 cmd.SetGlobalTexture(PSXShaderIDs._WhiteNoiseTexture, whiteNoiseTexture);
                 cmd.SetGlobalVector(PSXShaderIDs._WhiteNoiseSize, new Vector4(whiteNoiseTexture.width, whiteNoiseTexture.height, 1.0f / (float)whiteNoiseTexture.width, 1.0f / (float)whiteNoiseTexture.height));
                 
                 Texture2D blueNoiseTexture = GetBlueNoise16RGBTexFromAssetAndFrame(asset, (uint)Time.frameCount);
+                if (blueNoiseTexture == null)
+                {
+                    blueNoiseTexture = Texture2D.grayTexture;
+                }
                 cmd.SetGlobalTexture(PSXShaderIDs._BlueNoiseTexture, blueNoiseTexture);
                 cmd.SetGlobalVector(PSXShaderIDs._BlueNoiseSize, new Vector4(blueNoiseTexture.width, blueNoiseTexture.height, 1.0f / (float)blueNoiseTexture.width, 1.0f / (float)blueNoiseTexture.height));
                 
