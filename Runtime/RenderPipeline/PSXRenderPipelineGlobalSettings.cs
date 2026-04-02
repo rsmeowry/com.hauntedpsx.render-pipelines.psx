@@ -18,12 +18,7 @@ namespace HauntedPSX.RenderPipelines.PSX.Runtime
         {
             PSXRenderPipelineGlobalSettings currentInstance = instance;
                 
-            if (RenderPipelineGlobalSettingsUtils.TryEnsure<PSXRenderPipelineGlobalSettings, PSXRenderPipeline>(ref currentInstance, defaultPath, canCreateNewAsset))
-            {
-                return currentInstance;
-            }
-
-            return null;
+            return instance;
         }
     }
 }
