@@ -25,11 +25,6 @@ namespace HauntedPSX.RenderPipelines.PSX.Runtime
 
             return null;
         }
-
-        public override void Initialize(RenderPipelineGlobalSettings source = null)
-        {
-            // Initialize default settings if needed
-        }
     }
 }
 
